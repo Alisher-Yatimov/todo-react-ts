@@ -1,24 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import { Header } from "./components/Header";
+import { TodoForm } from "./components/TodoForm";
+import { useDispatch, useSelector } from "react-redux";
+import { addTodo } from "./store/todosSlice";
+import { TodoList } from "./components/TodoList";
+import {IStore} from './types/State';
 
 function App() {
+  const dispatch = useDispatch();
+  const todos = useSelector((state: IStore) => state.todos);
+  const [inputValue, setInputValue] = useState("");
+  const submitHandler = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    dispatch(addTodo(inputValue));
+    setInputValue('');
+  };
+
+  const changeHandler = (event: React.FormEvent<HTMLInputElement>) => {
+    setInputValue(event.currentTarget.value);
+  };
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header />
+      <TodoForm
+        onSubmit={submitHandler}
+        onChange={changeHandler}
+        inputValue={inputValue}
+        placeholder=""
+      />
+      <TodoList todos={todos.todos}/>
     </div>
   );
 }
