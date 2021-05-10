@@ -1,8 +1,8 @@
 import React, { FC } from "react";
 import styled from "styled-components";
-import { Button } from "./Button";
-import { Container } from "./Container";
-import { Variant } from "../types/Variants";
+import { Button } from "../Button";
+import { Container } from "../Container";
+import { Variant } from "../../types/Variants";
 
 const Form = styled.form`
   display: flex;

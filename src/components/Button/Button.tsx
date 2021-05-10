@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Variant } from '../types/Variants';
+import { Variant } from '../../types/Variants';
 
 
-interface IBtnProps {
+export interface IBtnProps {
     variant: Variant;
     width: number;
     height: number;

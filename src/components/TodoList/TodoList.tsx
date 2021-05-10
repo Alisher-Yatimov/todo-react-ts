@@ -1,6 +1,6 @@
-import { ITodo } from "../types/Todo";
-import { Container } from "./Container";
-import { TodoCard } from "./TodoCard";
+import { ITodo } from "../../types/Todo";
+import { Container } from "../Container";
+import { TodoCard } from "../TodoCard";
 
 interface ITodoListProps {
   todos: ITodo[];

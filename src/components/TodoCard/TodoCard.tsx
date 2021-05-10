@@ -1,12 +1,12 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { ITodo } from "../types/Todo";
-import { Variant } from "../types/Variants";
-import { Button } from "./Button";
-import { checkTodo, removeTodo } from "../store/todosSlice";
+import { ITodo } from "../../types/Todo";
+import { Variant } from "../../types/Variants";
+import { Button } from "../Button";
+import { checkTodo, deleteTodo } from "../../store/todosSlice";
 
-interface ICardProps extends ITodo {
+export interface ICardProps extends ITodo {
   children?: React.ReactNode;
 }
 
@@ -41,7 +41,7 @@ export const TodoCard = (props: ICardProps) => {
   const dispatch = useDispatch();
   const { title, id, done } = props;
   const removeHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
-    dispatch(removeTodo(id));
+    dispatch(deleteTodo(id));
   };
   const checkHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
     dispatch(checkTodo(id));

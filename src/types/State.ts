@@ -6,5 +6,6 @@ export interface IState {
 export interface IStore {
     todos: {
       todos: ITodo[]
-    }
+    },
+    theme: boolean
   }
