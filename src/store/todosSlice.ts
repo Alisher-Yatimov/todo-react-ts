@@ -1,22 +1,34 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { IState } from "../types/State";
+import { ITodoState } from "../types/State";
 import { URL } from "../constants/api";
 
-const initialState: IState = { todos: [] };
+const initialState: ITodoState = { todos: [] };
 
-export const getAllTodos = createAsyncThunk("todos/fetchTodos", async () => {
-  const response = await fetch(`${URL}/todos`);
+interface IBody {
+  [key: string]: any;
+  token: string;
+  title?: string;
+  todoId?: number
+}
+
+export const getAllTodos = createAsyncThunk("todos/fetchTodos", async (token: string) => {
+  const response = await fetch(`${URL}/todos`, {headers: {
+    "Authorization": `Bearer ${token}`
+  }});
   const todos = await response.json();
   return todos;
 });
 
 export const addNewTodo = createAsyncThunk(
   "todos/addNew",
-  async (todoTile: string) => {
+  async (todoData: IBody) => {
     const response = await fetch(`${URL}/todos`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ title: todoTile }),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${todoData.token}`
+      },
+      body: JSON.stringify({ title: todoData.title }),
     });
     const newTodo = await response.json();
     return newTodo;
@@ -25,10 +37,13 @@ export const addNewTodo = createAsyncThunk(
 
 export const deleteTodo = createAsyncThunk(
   'todos/removeOne',
-  async (todoId: number) => {
-    const response = await fetch(`${URL}/todos/${todoId}`, {
+  async (todoData: IBody) => {
+    const response = await fetch(`${URL}/todos/${todoData.todoId}`, {
       method: 'DELETE',
-      headers: { "Content-Type": "application/json" }
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${todoData.token}`
+      },
     })
     const removedId = await response.json();
     return removedId;
@@ -37,10 +52,13 @@ export const deleteTodo = createAsyncThunk(
 
 export const checkTodo = createAsyncThunk(
   'todo/checkTodo',
-  async (todoId: number) => {
-    const response = await fetch(`${URL}/todos/${todoId}`, {
+  async (todoData: IBody) => {
+    const response = await fetch(`${URL}/todos/${todoData.todoId}`, {
       method: 'PATCH',
-      headers: { "Content-Type": "application/json" },
+      headers: { 
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${todoData.token}`
+    },
     });
     const newTodo = await response.json();
     return newTodo;

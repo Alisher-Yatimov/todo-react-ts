@@ -7,10 +7,13 @@ export interface IBtnProps {
     variant: Variant;
     width: number;
     height: number;
-    onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void,
-    children?: React.ReactNode,
-    disabled?: boolean
+    onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+    children?: React.ReactNode;
+    disabled?: boolean;
+    type?: ButtonType;
 }
+
+type ButtonType = 'button' | 'reset' | 'submit' | undefined;
 
 const StyledButton = styled.button`
     background-color: ${(props: IBtnProps) => props.variant};

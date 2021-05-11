@@ -1,5 +1,4 @@
 import { ITodo } from "../../types/Todo";
-import { Container } from "../Container";
 import { TodoCard } from "../TodoCard";
 
 interface ITodoListProps {
@@ -8,8 +7,11 @@ interface ITodoListProps {
 
 export const TodoList = (props: ITodoListProps) => {
   const { todos } = props;
+  if(!todos.length) {
+    return <h1>todolist is empty</h1>
+  }
   return (
-    <Container>
+    <>
       {todos.map((todo) => (
         <TodoCard
           id={todo.id}
@@ -18,6 +20,6 @@ export const TodoList = (props: ITodoListProps) => {
           key={todo.id}
         />
       ))}
-    </Container>
+    </>
   );
 };

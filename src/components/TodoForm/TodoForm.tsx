@@ -1,7 +1,6 @@
 import React, { FC } from "react";
 import styled from "styled-components";
 import { Button } from "../Button";
-import { Container } from "../Container";
 import { Variant } from "../../types/Variants";
 
 const Form = styled.form`
@@ -34,7 +33,6 @@ export const TodoForm: FC<IFormProps> = ({
   inputValue,
 }) => {
   return (
-    <Container>
       <Form onSubmit={onSubmit}>
         <Input
           placeholder={placeholder}
@@ -50,6 +48,5 @@ export const TodoForm: FC<IFormProps> = ({
           add
         </Button>
       </Form>
-    </Container>
   );
 };

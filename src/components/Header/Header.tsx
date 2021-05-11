@@ -4,9 +4,15 @@ import sunImg from "../../sun.svg";
 import moonImg from "../../moon.svg";
 import Switch from "react-switch";
 import { useDispatch, useSelector } from "react-redux";
-import { IStore } from "../../types/State";
+import { IState, IStore } from "../../types/State";
 import { changeTheme } from "../../store/themeSlice";
 import { IPreset } from "../../types/Theme";
+import { NavLink } from "react-router-dom";
+import { routes } from "../../constants/routes";
+import { Button } from '../Button'
+import { Variant } from "../../types/Variants";
+import {logout} from '../../store/userSlice';
+
 const StyledHeader = styled.header<IHeaderProps>`
   height: 60px;
   background: ${(props) => props.theme.primary};
@@ -29,7 +35,9 @@ const Navigation = styled.nav`
   align-items: center;
 `;
 
-const Link = styled.a<IHeaderProps>`
+const activeClassName = 'nav-item-active'
+
+const Link = styled(NavLink).attrs({ activeClassName })`
   text-decoration: none;
   color: ${(props) => props.theme.text};
   text-transform: capitalize;
@@ -44,6 +52,14 @@ const Link = styled.a<IHeaderProps>`
     transition: all ease-in 0.3s;
   }
   &:hover:after {
+    transform: scale(1);
+  }
+  &.${activeClassName}::after{
+    content: '';
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: white;
     transform: scale(1);
   }
 `;
@@ -70,17 +86,27 @@ export interface IStyledProps {
 export const Header = (props: IHeaderProps) => {
   const dispatch = useDispatch();
   const checked = useSelector((state: IStore) => state.theme);
+  const isAuthorized = useSelector((state: IState) => !!state.user.token?.token)
   const onChange = () => {
     dispatch(changeTheme());
   };
+  const logoutBtnHandler = () => {
+    dispatch(logout())
+  }
 
   return (
     <StyledHeader>
       <Logo src={logo} />
       <Navigation>
-        <Link href="#">home</Link>
-        <Link href="#">about us</Link>
-        <Link href="#">contact</Link>
+        {!isAuthorized && (
+          <>
+            <Link to={routes.login}>Login</Link>
+            <Link to={routes.register}>Register</Link>
+          </>
+        )}
+        {isAuthorized && (
+          <Button height={3} width={6} variant={Variant.secondary} onClick={logoutBtnHandler}>logout</Button>
+        )}
         <Switch
           onChange={onChange}
           checked={checked}

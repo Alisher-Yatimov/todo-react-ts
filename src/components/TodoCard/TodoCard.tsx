@@ -1,18 +1,19 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { ITodo } from "../../types/Todo";
 import { Variant } from "../../types/Variants";
 import { Button } from "../Button";
 import { checkTodo, deleteTodo } from "../../store/todosSlice";
+import { IState } from "../../types/State";
 
 export interface ICardProps extends ITodo {
   children?: React.ReactNode;
 }
 
 interface ITitle {
-    children?: React.ReactNode;
-    done: boolean;
+  children?: React.ReactNode;
+  done: boolean;
 }
 
 const Card = styled.div`
@@ -28,7 +29,7 @@ const Card = styled.div`
 `;
 
 const Title = styled.p`
-    text-decoration: ${(props: ITitle) => props.done ? 'line-through' : ''};
+  text-decoration: ${(props: ITitle) => (props.done ? "line-through" : "")};
 `;
 
 const BtnsBlock = styled.div`
@@ -39,12 +40,13 @@ const BtnsBlock = styled.div`
 
 export const TodoCard = (props: ICardProps) => {
   const dispatch = useDispatch();
+  const token = useSelector((state: IState) => state.user.token.token);
   const { title, id, done } = props;
-  const removeHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
-    dispatch(deleteTodo(id));
+  const removeHandler = () => {
+    dispatch(deleteTodo({ todoId: id, token }));
   };
-  const checkHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
-    dispatch(checkTodo(id));
+  const checkHandler = () => {
+    dispatch(checkTodo({ todoId: id, token }));
   };
   return (
     <Card>
