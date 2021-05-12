@@ -1,6 +1,6 @@
 export enum Variant {
-    primary = '#264653',
-    secondary = '#2a9d8f',
-    danger = '#e76f51',
-    warning = '#e76f51'
+    Primary = '#264653',
+    Secondary = '#2a9d8f',
+    Danger = '#e76f51',
+    Warning = '#e76f51'
 }

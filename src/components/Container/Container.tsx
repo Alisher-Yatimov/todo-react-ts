@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { Header } from '../Header';
 
@@ -10,11 +10,13 @@ const Wrapper = styled.div`
     align-items: center;
 `;
 
-export const Container: FC = ({children}) => (
+interface IContainerProps {
+    children: React.ReactNode;
+}
+
+export const Container = ({ children }: IContainerProps): React.ReactElement => (
     <>
         <Header />
-        <Wrapper>
-            {children}
-        </Wrapper>
+        <Wrapper>{children}</Wrapper>
     </>
 );

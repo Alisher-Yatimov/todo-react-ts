@@ -1,3 +1,4 @@
+import React from 'react';
 import { useSelector } from 'react-redux';
 import { Switch, Redirect } from 'react-router-dom';
 import { routes } from '../constants/routes';
@@ -8,7 +9,7 @@ import { IState } from '../types/State';
 import { PrivateRoute } from './PrivateRoute';
 import { PublicRoute } from './PublicRoute';
 
-export const Routes  = () => {
+export const Routes = (): React.ReactElement => {
     const token = useSelector((state: IState) => state.user.token?.token);
     return (
         <Switch>
@@ -18,4 +19,4 @@ export const Routes  = () => {
             <Redirect to={routes.register} />
         </Switch>
     );
-}
+};
