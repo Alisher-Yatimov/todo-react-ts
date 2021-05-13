@@ -26,8 +26,8 @@ export const loginUser = createAsyncThunk('user/login-user', async (userData: IU
         const data = await response.json();
 
         if (data.statusCode === 400) {
-            rejectWithValue(data.message);
-            return;
+          rejectWithValue(data.message);
+          return null;
         }
         return data;
     } catch (error) {
